@@ -1,0 +1,29 @@
+<% layout('/layouts/boilerplate')%>
+    <section class='forumPage'>
+        <div class='newPostPage'>
+            <form action="/forums" class='newPost' method='post' id='newPost'>
+                <div>
+                    <label for="postTitle"></label>
+                    <input type="text" id="postTitle" name='postTitle' class='titleEnter' placeholder="Enter Title...">
+                </div>
+
+                <input id='quillText' name='quillText' display='none'>
+                <div id='editor'></div>
+
+                <div>
+                    <label for="category">Sub</label>
+                    <select name="category" id="category">
+                        <option value="General">General</option>
+                        <option value="Guides">Guides</option>
+                        <option value="Speedrun">Speedrun</option>
+                        <option value="Art">Art</option>
+                        <option value="Easter Eggs">Easter Eggs</option>
+                        <option value="Humor">Humor</option>
+                    </select>
+                </div>
+                <div class='centeredDiv'>
+                    <button class='roundedButton' id='submitPost'>Submit</button>
+                </div>
+            </form>
+        </div>
+    </section>

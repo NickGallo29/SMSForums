@@ -1,0 +1,41 @@
+<% layout('/layouts/boilerplate')%>
+    <h1>Super Mario Sunshine Forums</h1>
+    <div class='columnBlock'>
+        Welcome to the Super Mario Sunshine Forums!
+        <br>
+        <br>
+        While non-official, we are happy to provide a place for all SMS fans to talk freely and have some fun. We
+        hope to keep this community friendly and engaged, so any bullying or harassment will not be tolerated.
+        <br>
+        <br>
+        Keep all discussions relevant to the board and in their appropriate forums. If a forum is in an incorrect location, a moderater will change
+        the category to its respected place.
+        <br>
+        <br>
+        Have some fun and enjoy!
+    </div>
+    <% for(let forum of forums){%>
+        <%counter=0;%>
+        <section id="forumBlock">
+            <div class="forumInfo">
+                <div class="forumTitle">
+                <a href='/forums/<%=forum%>'><%=forum%></a>
+                </div>
+                <div class='forumPreview'>
+                    <% for(let post of posts){%>
+                        <%if(post.category===forum){%>
+                            <a href='/forums/<%=forum%>/<%=post._id%>'><h1><%=post.postTitle%></h1></a>
+                        
+                            <%counter++%>
+                        <%}%>
+                        <%if(counter===3){%>
+                            <%break;%>
+                        <%}%>
+                    <%}%>
+                    <a class='seeMore' href='/forums/<%=forum%>'><h1>See All</h1></a>
+                </div>
+            </div>
+            
+        </section>
+    <%}%>
+

@@ -1,0 +1,298 @@
+
+/*SMS Fan Page Style Sheet*/
+
+/*Nav Bar*/
+@import "/node_modules/quill/dist/quill.snow.css";
+
+#navbar{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    min-height: 8vh;
+    background-color:#0172ff;
+    font-family: 'Montserrat', sans-serif;
+    height:40px;
+    z-index:1;
+}
+
+.logo{
+    font-size: 4vh;
+    z-index: 1;
+}
+
+.nav-links a{
+    text-decoration: none;
+    color:white;
+    font-size: 14px;
+    letter-spacing: 3px;
+}
+
+.nav-links li{
+    list-style: none;
+}
+
+.nav-links{
+    display:flex;
+    justify-content: space-around;
+    width:50%;
+}
+
+.burger{
+    display:none;
+    z-index:1;
+}
+
+.burger div{
+    width:25px;
+    height:5px;
+    background-color: white;
+    margin: 5px;
+}
+
+@media (max-width:1000px){
+    .nav-links{
+        width:60%;
+    }
+}
+
+@media (max-width:768px){
+    .nav-links{
+        padding-top:120px;
+        padding-bottom:100px;
+        position: absolute;
+        height:9vh;
+        top:7vh;
+        background-color: #0172ff;
+        display:flex;
+        flex-direction: column;
+        align-items:center;
+        width:100%;
+        transform:translateY(-210px);
+        z-index:0;
+        transition: transform 0.5s ease-in, z-index 0s linear 0.01s;
+
+    }
+    .nav-links li{
+        padding-bottom:20px;
+        opacity:0;
+    }
+    .burger{
+        display:block;
+    }
+}
+.nav-active{
+    transform:translateY(0px);
+    z-index:0;
+}
+
+@keyframes navLinkFade {
+    from{opacity:0;transform:translateY(50px)}
+    to{opacity:1;transform:translateY(0px)}
+}
+
+/*ForumHome Page*/
+
+#forumBlock{
+    display:flex;
+    flex-direction:column;
+    margin-left:60px;
+    margin-right:60px;
+    margin-top: 30px;
+    margin-bottom:30px;
+    background-color:white;
+    font-family: 'Montserrat', sans-serif;
+    border:solid 2px black;
+    border-radius:10px;
+}
+
+#forumBlock a{
+    text-decoration: none;
+    color:black;
+}
+
+#forumBlock .forumInfo{
+    display:inline-flex;
+    flex-direction:row;
+}
+
+
+#forumBlock .forumInfo .forumTitle{
+    padding-top:40px;
+    padding-bottom:40px;
+    padding-left:20px;
+    padding-right:60px;
+    text-decoration: none;
+    color:black;
+    font-size:8vh;
+    background-color:#0172ff;
+    width:80%;
+    text-align: center;
+}
+
+#forumBlock .forumInfo .forumPreview{
+    display:flex;
+    flex-direction: column;
+    width:100%;
+}
+
+#forumBlock .forumInfo .forumPreview a{
+    font-size: 2vh;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid black;
+    width: 100%;
+    transition: background-color 0.5s;
+}
+
+#forumBlock .forumInfo .forumPreview .seeMore{
+    border-bottom:none;
+    transition: background-color 0.5s;
+    text-align: center;
+}
+
+#forumBlock .forumInfo .forumPreview a:hover,#forumBlock .forumInfo .forumPreview .seeMore:hover{
+    background-color:#a3a3a2
+}
+
+/*forumShow*/
+
+.forumPage{
+    display:flex;
+    flex-direction: row;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.forumPage .forumInfo{
+    margin-top:60px;
+    max-width: 20%;
+    height:fit-content;
+    background-color: white;
+    margin-left:60px;
+    margin-right:60px;
+    border: solid 2px black;
+}
+
+.forumPage .forumInfo h1{
+    background-color:#0172ff;
+    padding-top:10px;
+    padding-bottom:10px;
+    text-align:center;
+}
+
+.forumPage .forumInfo p{
+    margin:15px
+}
+
+.forumPage .forumPosts{
+    width: 50%;
+}
+
+.forumPage .forumPosts div{
+    border: solid 2px black;
+    padding-top:10px;
+    padding-bottom:10px;
+    margin-bottom: 25px;
+    margin-top:25px;
+    background-color: white;
+    width:100%;
+    border-radius: 15px;
+}
+
+.forumPage .forumPosts a{
+    text-decoration: none;
+    color:black;
+
+}
+
+.forumBlockContent h1, .forumBlockContent p{
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top:15px;
+    margin-bottom: 15px;
+}
+
+.forumDesc h1{
+    text-align: center;
+}
+
+/*New Post*/
+
+.newPostPage{
+    padding-bottom:200px;
+    margin-top:40px;
+    margin-left:10%;
+    display:flex;
+    flex-direction: column;
+    background-color: white;
+    font-family: 'Montserrat', sans-serif;
+    color:black;
+    border: solid 2px black;
+    width:80%;
+    border-radius: 15px;
+    
+}
+
+.newPost{
+    margin:20px;
+}
+
+#commentBlock{
+    margin:20px;
+    width:80;
+    align-items: center;
+}
+/*Reusables*/
+
+.columnBlock{
+    display:flex;
+    flex-direction:column;
+    margin-left:60px;
+    margin-right:60px;
+    margin-top: 30px;
+    margin-bottom:30px;
+    background-color:white;
+    font-family: 'Montserrat', sans-serif;
+    color:black;
+    font-size: 30px;
+    text-align: center;
+    border: solid 2px black;
+}
+
+.roundedButton{
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 15px;
+    background-color:#0172ff;
+    margin:5px;
+    width:80%;
+    padding-top:10px;
+    padding-bottom:10px;
+    border: solid 2px black;
+}
+
+.centeredDiv{
+    text-align:center;
+}
+
+.roundedButton a{
+    color:black;
+    text-decoration: none;
+    text-align: center;
+}
+
+.body{
+    background-color: #dfe4ed;
+}
+
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing:border-box;
+}
+
+.categoryStyle{
+    margin-left:30px;
+    padding:5px;
+    border-radius: 25px;
+    border: solid 2px black;
+    max-width: fit-content;
+}

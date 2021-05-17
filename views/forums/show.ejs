@@ -1,0 +1,38 @@
+<% layout('/layouts/boilerplate')%>
+
+    <section class='forumPage'>
+        <div class="forumInfo">
+            <h1><%=post.category%></h1>
+            <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat, fuga illum voluptates ducimus minima a, maiores doloribus sed ea necessitatibus, expedita reiciendis ratione minus velit nam? Similique totam corporis suscipit.
+                Id cum voluptas placeat repellendus! Fugit illum quaerat aliquid non unde error eaque nulla reiciendis hic iste modi amet mollitia saepe ea, autem est necessitatibus natus aspernatur excepturi dicta magni.
+            </p>
+            <a href="/forums/<%=post.category%>">
+                <div class='centeredDiv'>
+                    <button class='roundedButton'>Back</button>
+                </div>
+            </a>
+        </div>
+        <div class='forumPosts'>
+            <div class='forumBlockContent'>
+                    <h1><b><%=post.postTitle%></b></h1>
+                    <p id='forumPostB'></p>
+                    <h3 class='categoryStyle'><%=post.category%></h3>
+                    <form class='createComment' action="/forums/<%=post.category%>/<%=post._id%>/comments" method="POST">
+                        <label for="commentText"></label>
+                        <input type="text" name="commentText" id="commentText">
+                        <button class="roundedButton">Post Comment</button>
+                    </form>
+                    <%for(let comment of post.comments){%>
+
+                        <div id="commentBlock">
+                            <p><%=comment.commentText%></p>
+                        </div>
+                    <%}%>
+        </div>
+        <%-include('../../public/textCompiler')%>
+    </section>
+
+    <footer>
+        <a href="/forums/<%=post.category%>/<%=post._id%>/edit">Edit</a>
+    </footer>

@@ -1,0 +1,38 @@
+<% layout('/layouts/boilerplate')%>
+    <section class="forumPage">
+        <div class="forumInfo">
+            <h1><%=sub%></h1>
+            <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat, fuga illum voluptates ducimus minima a, maiores doloribus sed ea necessitatibus, expedita reiciendis ratione minus velit nam? Similique totam corporis suscipit.
+                Id cum voluptas placeat repellendus! Fugit illum quaerat aliquid non unde error eaque nulla reiciendis hic iste modi amet mollitia saepe ea, autem est necessitatibus natus aspernatur excepturi dicta magni.
+            </p>
+            <a href="/forums/new">
+                <div class='centeredDiv'>
+                    <button class='roundedButton'>New Post</button>
+                </div>
+            </a>
+            <a href="/forums">
+                <div class='centeredDiv'>
+                    <button class='roundedButton' type='button'>Back</button>
+                </div>
+            </a>
+        </div>
+        <div class='forumPosts'>
+            <%for(let post of posts){%>
+                <a href='/forums/<%=post.category%>/<%=post._id%>'>
+                    <div class='forumBlockContent'>
+                        <h1><%=post.postTitle%></h1>
+                        <p>
+                            <%=post.postText%>
+                        </p>
+                        
+                    </div>
+
+                </a>
+            <%}%>
+        </div>
+    </section>
+
+
+
+    

@@ -1,0 +1,15 @@
+<% 
+    function bodyConverter(body){
+        for(let parts of body){
+            var insert= document.createTextNode(parts.insert);
+            if(parts.attribute){
+                if(parts.attribute.bold){
+                    insert.bold();
+                }
+            }
+
+            var p = document.getElementById('postBody');
+            p.append(insert);
+        }
+    }
+ %> 

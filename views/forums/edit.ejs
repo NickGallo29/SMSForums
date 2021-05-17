@@ -1,0 +1,28 @@
+<% layout('/layouts/boilerplate')%>
+    <form action="/forums/<%=post.category%>/<%=post._id%>?_method=PUT" method="POST">
+        <div>
+            <label for="postTitle">Title</label>
+            <input type="text" id="postTitle" name='postTitle' value='<%=post.postTitle%>'>
+        </div>
+        <div>
+            <label for="postText">Body</label>
+            <div>
+             <textarea id="postText" name="postText" rows="5" cols="60"><%=post.postText%></textarea>
+            </div>
+        </div>
+        <div>
+            <label for="category">Sub</label>
+            <select name="category" id="category">
+                <option value="General">General</option>
+                <option value="Guides">Guides</option>
+                <option value="Speedrun">Speedrun</option>
+                <option value="Art">Art</option>
+                <option value="Easter Eggs">Easter Eggs</option>
+                <option value="Humor">Humor</option>
+            </select>
+        </div>
+        <button>Update Post</button>
+    </form>
+    <form action="/forums/<%=post.category%>/<%=post._id%>?_method=DELETE" method="POST">
+        <button>Delete</button>
+    </form>
