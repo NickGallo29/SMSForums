@@ -18,6 +18,7 @@ const ejsMate=require('ejs-mate');
 const catchAsync=require('./utils/catchAsync');
 const ExpressError=require('./utils/ExpressError');
 const Joi = require('joi');
+const session = require('express-session');
 
 const forums = require('./routes/forums');
 
@@ -51,6 +52,13 @@ app.set('views',path.join(__dirname,'views'));
 app.use(express.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.use(methodOverride('_method'));
+
+const sessionConfig={
+    secret:"flashliquidizerultradousingdevice",
+    resave:false,
+    saveUninitialized: true
+}
+app.use(session(sessionConfig))
 
 
 //.get to render pages for url loads
