@@ -1,0 +1,13 @@
+<% if(success && success.length){%>
+    <div id='flash' class='success'>
+        <p id='flash-message'><%=success%></p>
+        <i class="fas fa-times" id="exitFlash" onclick="dismissFlash()"></i>
+    </div>
+<%}%>
+
+<% if(error && error.length){%>
+    <div id='flash' class='error'>
+        <p id='flash-message'><%=error%></p>
+        <i class="fas fa-times" id="exitFlash" onclick="dismissFlash()"></i>
+    </div>
+<%}%>
