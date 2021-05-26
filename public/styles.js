@@ -1,6 +1,3 @@
-
-
-
 const navSlide=()=>{
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
@@ -49,6 +46,12 @@ function imageHandler() {
     }
 };
 
+//Dismissing Flash Messages
+const flash = document.getElementById('flash');
+
+function dismissFlash(){
+    flash.style.display="none";
+};
 
 const submitBtn = document.getElementById('submitPost');
 
@@ -56,6 +59,9 @@ submitBtn.addEventListener('click',()=>{
     var about = document.getElementById('quillText');
     about.value=JSON.stringify(quill.getContents());
 });
+
+
+
 
 
 

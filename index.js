@@ -19,6 +19,7 @@ const catchAsync=require('./utils/catchAsync');
 const ExpressError=require('./utils/ExpressError');
 const Joi = require('joi');
 const session = require('express-session');
+const flash = require('connect-flash');
 
 const forums = require('./routes/forums');
 
@@ -53,12 +54,26 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.use(methodOverride('_method'));
 
+//Cookie Configuration
+
 const sessionConfig={
     secret:"flashliquidizerultradousingdevice",
     resave:false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie:{
+        httpOnly:true,
+        expires: Date.now() + 604800000, //Milliseconds in a week
+        maxAge:604800000
+    }
 }
 app.use(session(sessionConfig))
+app.use(flash());
+
+app.use((req,res,next)=>{
+    res.locals.success= req.flash('success');
+    res.locals.error=req.flash('error');
+    next();
+})
 
 
 //.get to render pages for url loads

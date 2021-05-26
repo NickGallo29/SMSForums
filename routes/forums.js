@@ -5,6 +5,7 @@ const Comment = require('../models/comment');
 const catchAsync=require('../utils/catchAsync');
 const ExpressError=require('../utils/ExpressError');
 const {postSchema, commentSchema}=require('../schemas.js');
+const mongoose = require('mongoose');
 
 
 const validatePost = (req,res,next)=>{
@@ -48,7 +49,16 @@ router.get('/:tagId',catchAsync(async(req,res)=>{
 }))
 
 router.get('/:tagId/:id',catchAsync(async(req,res)=>{
+    //Error Handlers for Invalid URL
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)){
+        req.flash('error','Invalid URL');
+        return res.redirect(`/forums/${req.params.tagId}`);
+    }
     const post=await ForumPost.findById(req.params.id).populate('comments');
+    if(!post){
+        req.flash('error','Post No longer exists');
+        return res.redirect(`/forums/${req.params.tagId}`);
+    }
     const JSONBody= JSON.parse(post.quillText);
     const postBody=JSONBody.ops;
     const length=postBody.length;
@@ -65,6 +75,7 @@ router.post('/', validatePost, catchAsync(async (req,res)=>{
     const newPost=new ForumPost(req.body);
     console.log(req.body);
     await newPost.save();
+    req.flash('success','Post Successfully Created');
     res.redirect(`/forums/${newPost.category}/${newPost._id}`)
 }))
 
