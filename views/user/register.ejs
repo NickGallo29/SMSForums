@@ -1,0 +1,20 @@
+<% layout('layouts/boilerplate') %>
+<form action="/login" method="POST" class="authForm" id="register">
+    <h1>Register</h1>
+    <p>Please enter the fields below</p>
+    <div class='authLabel'>
+        <label for="Email">Email</label>
+        <input type="text" id="email" name="email" class='authInput' required>
+    </div>
+    <div class='authLabel'>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" class="authInput" required>
+    </div>
+    <div class='authLabel'>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div class='centeredDiv'>
+        <button class='roundedButton'>Register</button>
+    </div>
+</form>

@@ -6,6 +6,7 @@ const catchAsync=require('../utils/catchAsync');
 const ExpressError=require('../utils/ExpressError');
 const {postSchema, commentSchema}=require('../schemas.js');
 const mongoose = require('mongoose');
+const {isLoggedIn} = require('../middleware');
 
 
 const validatePost = (req,res,next)=>{
@@ -36,7 +37,7 @@ router.get('/',catchAsync(async (req,res)=>{
     //$or[{category:'General'},{category:'Guides'},{category:'Speedrun'},{category:'Art'},{category:'Easter Eggs'},{category:'Humor'}]
 }))
 
-router.get('/new',(req,res)=>{
+router.get('/new',isLoggedIn,(req,res)=>{
     res.render('forums/new');
 })
 
@@ -66,12 +67,12 @@ router.get('/:tagId/:id',catchAsync(async(req,res)=>{
     res.render('forums/show',{post,postBody,length});
 }))
 
-router.get('/:tagId/:id/edit',catchAsync(async(req,res)=>{
+router.get('/:tagId/:id/edit',isLoggedIn,catchAsync(async(req,res)=>{
     const post=await ForumPost.findById({_id:req.params.id});
     res.render('forums/edit',{post});
 }))
 
-router.post('/', validatePost, catchAsync(async (req,res)=>{
+router.post('/', isLoggedIn, validatePost, catchAsync(async (req,res)=>{
     const newPost=new ForumPost(req.body);
     console.log(req.body);
     await newPost.save();
@@ -79,19 +80,19 @@ router.post('/', validatePost, catchAsync(async (req,res)=>{
     res.redirect(`/forums/${newPost.category}/${newPost._id}`)
 }))
 
-router.put('/:tagId/:id', catchAsync(async(req,res)=>{
+router.put('/:tagId/:id', isLoggedIn,catchAsync(async(req,res)=>{
     const id=req.params.id;
     const post=await ForumPost.findByIdAndUpdate(id,(req.body));
     res.redirect(`/forums/${post.category}/${post._id}`)
 }))
 
-router.delete('/:tagId/:id',catchAsync(async(req,res)=>{
+router.delete('/:tagId/:id',isLoggedIn,catchAsync(async(req,res)=>{
     const id=req.params.id;
     await ForumPost.findByIdAndDelete(id);
     res.redirect(`/forums/${req.params.tagId}`);
 }))
 
-router.post('/:tagId/:id/comments',validateComment,catchAsync(async(req,res)=>{
+router.post('/:tagId/:id/comments',isLoggedIn,validateComment,catchAsync(async(req,res)=>{
     const post = await ForumPost.findById(req.params.id);
     const comment = await new Comment(req.body);
     post.comments.push(comment);
