@@ -154,6 +154,13 @@
     background-color:#a3a3a2
 }
 
+#commentText{
+    width:100%;
+    margin-top: 10px;
+    padding-bottom: 50px;
+    line-height:140%;
+}
+
 /*forumShow*/
 
 .forumPage{
@@ -187,7 +194,7 @@
     width: 50%;
 }
 
-.forumPage .forumPosts div{
+.forumPage .forumPosts .forumBlockContent{
     border: solid 2px black;
     padding-top:10px;
     padding-bottom:10px;
@@ -204,9 +211,13 @@
 
 }
 
-.forumBlockContent h1, .forumBlockContent p{
+.forumBlockContent #info{
     margin-left: 30px;
     margin-right: 30px;
+}
+
+
+.forumBlockContent h1, .forumBlockContent p{
     margin-top:15px;
     margin-bottom: 15px;
 }
@@ -241,6 +252,11 @@
     margin:20px;
     width:80;
     align-items: center;
+}
+
+#commentBlock p{
+    max-width:100%;
+    overflow-wrap: break-word;
 }
 
 .authForm{
@@ -295,6 +311,10 @@
 #flash-message{
     margin-left:5px;
 }
+
+#PostInfoHeader a{
+    margin-right: 10px;
+}
 /*Reusables*/
 
 .success{
@@ -341,9 +361,7 @@
     text-align: center;
 }
 
-.body{
-    background-color: #dfe4ed;
-}
+
 
 *{
     margin:0px;
@@ -353,7 +371,6 @@
 }
 
 .categoryStyle{
-    margin-left:30px;
     padding:5px;
     border-radius: 25px;
     border: solid 2px black;
@@ -363,4 +380,19 @@
 #exitFlash{
     color:white;
     margin-right:5px;
+}
+
+.btnToLink{
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+}
+img{
+    max-width: 100%;
+    max-height: 100%;
 }

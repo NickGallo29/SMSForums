@@ -14,6 +14,10 @@ const forumSchema = new Schema({
         type:String,
         enum:['General','Guides','Speedrun','Art','Easter Eggs','Humor']
     },
+    author:{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    },
     comments: [
         {
             type: Schema.Types.ObjectId,
@@ -21,6 +25,18 @@ const forumSchema = new Schema({
         }
     ]
 });
+
+//Delete Comments Middleware
+
+forumSchema.post('findOneAndDelete',async function(doc){
+    if(doc){
+        await Comment.deleteMany({
+            _id:{
+                $in:doc.comments
+            }
+        })
+    }
+})
 
 //Export so model can be used
 module.exports=mongoose.model('ForumPost',forumSchema);

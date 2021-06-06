@@ -21,30 +21,30 @@ const navSlide=()=>{
 navSlide();
 
 
-var quill = new Quill('#editor',{
-    modules:{
-        toolbar:{
-            container: [
-                [{header:[1,2,3]}],
-                ['bold','italic','underline'],
-                ['image','link']
-            ],
-            handlers: {
-                'image':imageHandler
-            }
-        }
-    },
-    placeholder:'Post Body...',
-    theme:'snow'
-});
+// var quill = new Quill('#editor',{
+//     modules:{
+//         toolbar:{
+//             container: [
+//                 [{header:[1,2,3]}],
+//                 ['bold','italic','underline'],
+//                 ['image','link']
+//             ],
+//             handlers: {
+//                 'image':imageHandler
+//             }
+//         }
+//     },
+//     placeholder:'Post Body...',
+//     theme:'snow'
+// });
 
-function imageHandler() {
-    var range = this.quill.getSelection();
-    var value = prompt('What is the image URL');
-    if(value){
-        this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
-    }
-};
+// function imageHandler() {
+//     var range = this.quill.getSelection();
+//     var value = prompt('What is the image URL');
+//     if(value){
+//         this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
+//     }
+// };
 
 //Dismissing Flash Messages
 const flash = document.getElementById('flash');
@@ -53,12 +53,23 @@ function dismissFlash(){
     flash.style.display="none";
 };
 
-const submitBtn = document.getElementById('submitPost');
+//const submitBtn = document.getElementById('submitPost');
 
-submitBtn.addEventListener('click',()=>{
-    var about = document.getElementById('quillText');
-    about.value=JSON.stringify(quill.getContents());
-});
+// submitBtn.addEventListener('click',()=>{
+//     var about = document.getElementById('quillText');
+//     console.log(about);
+//     about.value=JSON.stringify(quill.getContents());
+// });
+
+//Delete Post
+const deletePost = document.getElementById('deletePost');
+
+deletePost.addEventListener('click',()=>{
+    $('#deleteForm').trigger('submit');
+
+    //stop the default behavior of the link
+    return false;
+})
 
 
 

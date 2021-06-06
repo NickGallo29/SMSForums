@@ -20,11 +20,11 @@ db.once("open",()=>{
 
 const seedDB=async()=>{
     await ForumPost.deleteMany({});
-    const text='Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga alias, tempore dolores laboriosam harum aspernatur debitis amet odit a esse praesentium quos accusantium deserunt ratione temporibus molestias sequi architecto iusto. Aliquid quam mollitia dolorem sit, iure labore voluptatum molestias. Autem alias voluptate est neque praesentium quia, sit nesciunt tempora doloribus placeat non recusandae id? Quae amet distinctio reprehenderit esse laboriosam?'
+    const text=JSON.stringify({"ops":[{"insert":"Sample text\n"}]});
     const temp=['General','Guides','Speedrun','Art','Easter Eggs','Humor']
     const characters=['Luigi','Yoshi','Peach','Bowser']
     for(i=0;i<50;i++){
-        const p = new ForumPost({postTitle:`Mario and ${characters[i%4]}`,postText:`${text}`,category:`${temp[i%6]}`});
+        const p = new ForumPost({postTitle:`Mario and ${characters[i%4]}`,quillText:text, category:`${temp[i%6]}`,author:'60b1a5aa2cae0c368cecd026'});
         await p.save();     
     }
 
