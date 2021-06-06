@@ -6,7 +6,7 @@ const catchAsync=require('../utils/catchAsync');
 const ExpressError=require('../utils/ExpressError');
 const {postSchema, commentSchema}=require('../schemas.js');
 const mongoose = require('mongoose');
-const {isLoggedIn} = require('../middleware');
+const {isLoggedIn,isAuthor,isCommentAuthor} = require('../middleware');
 
 
 const validatePost = (req,res,next)=>{
@@ -55,11 +55,17 @@ router.get('/:tagId/:id',catchAsync(async(req,res)=>{
         req.flash('error','Invalid URL');
         return res.redirect(`/forums/${req.params.tagId}`);
     }
-    const post=await ForumPost.findById(req.params.id).populate('comments');
+    const post=await ForumPost.findById(req.params.id).populate({
+        path:'comments',
+        populate:{
+            path:'author'
+        }
+    }).populate('author');
     if(!post){
         req.flash('error','Post No longer exists');
         return res.redirect(`/forums/${req.params.tagId}`);
     }
+    console.log(post.quillText);
     const JSONBody= JSON.parse(post.quillText);
     const postBody=JSONBody.ops;
     const length=postBody.length;
@@ -67,26 +73,29 @@ router.get('/:tagId/:id',catchAsync(async(req,res)=>{
     res.render('forums/show',{post,postBody,length});
 }))
 
-router.get('/:tagId/:id/edit',isLoggedIn,catchAsync(async(req,res)=>{
+router.get('/:tagId/:id/edit',isLoggedIn,isAuthor,catchAsync(async(req,res)=>{
     const post=await ForumPost.findById({_id:req.params.id});
-    res.render('forums/edit',{post});
+    const JSONBody= JSON.parse(post.quillText);
+    const quillBody=JSONBody.ops;
+    res.render('forums/edit',{post,quillBody});
 }))
 
 router.post('/', isLoggedIn, validatePost, catchAsync(async (req,res)=>{
     const newPost=new ForumPost(req.body);
-    console.log(req.body);
+    newPost.author=req.user._id;
     await newPost.save();
     req.flash('success','Post Successfully Created');
     res.redirect(`/forums/${newPost.category}/${newPost._id}`)
 }))
 
-router.put('/:tagId/:id', isLoggedIn,catchAsync(async(req,res)=>{
-    const id=req.params.id;
-    const post=await ForumPost.findByIdAndUpdate(id,(req.body));
-    res.redirect(`/forums/${post.category}/${post._id}`)
+router.put('/:tagId/:id', isLoggedIn,isAuthor,catchAsync(async(req,res)=>{
+    const {id,tagId}=req.params;
+    await ForumPost.findByIdAndUpdate(id,{...req.body})
+    req.flash('success','Successfully Updated Post')
+    res.redirect(`/forums/${tagId}/${id}`)
 }))
 
-router.delete('/:tagId/:id',isLoggedIn,catchAsync(async(req,res)=>{
+router.delete('/:tagId/:id',isLoggedIn,isAuthor,catchAsync(async(req,res)=>{
     const id=req.params.id;
     await ForumPost.findByIdAndDelete(id);
     res.redirect(`/forums/${req.params.tagId}`);
@@ -95,10 +104,18 @@ router.delete('/:tagId/:id',isLoggedIn,catchAsync(async(req,res)=>{
 router.post('/:tagId/:id/comments',isLoggedIn,validateComment,catchAsync(async(req,res)=>{
     const post = await ForumPost.findById(req.params.id);
     const comment = await new Comment(req.body);
+    comment.author=req.user._id;
     post.comments.push(comment);
     await comment.save();
     await post.save();
     res.redirect(`/forums/${req.params.tagId}/${req.params.id}`);
+}))
+
+router.delete('/:tagId/:id/comments/:commentId',isLoggedIn,isCommentAuthor,catchAsync(async(req,res)=>{
+    const{tagId,id,commentId}=req.params;
+    await ForumPost.findByIdAndUpdate(id,{$pull:{comments:commentId}});
+    await Comment.findByIdAndDelete(commentId);
+    res.redirect(`/forums/${tagId}/${id}`);
 }))
 
 module.exports=router;

@@ -15,24 +15,42 @@
         </div>
         <div class='forumPosts'>
             <div class='forumBlockContent'>
+                <div id="info">
+                    <header id='PostInfoHeader'>
+                        <a>Posted by u/<%=post.author.username%></a>
+                        <% if(currentUser && post.author.equals(currentUser)){%>
+                            <a href="/forums/<%=post.category%>/<%=post._id%>/edit">Edit</a>
+                            <a id='deletePost'>Delete</a>
+                        <%}%>
+                        <form action="/forums/<%=post.category%>/<%=post._id%>?_method=DELETE" method="POST" id="deleteForm">
+                        </form>
+                    </header>
                     <h1><b><%=post.postTitle%></b></h1>
+                    <hr>
                     <p id='forumPostB'></p>
                     <h3 class='categoryStyle'><%=post.category%></h3>
-                    <form class='createComment' action="/forums/<%=post.category%>/<%=post._id%>/comments" method="POST">
+                    <hr>
+                    <form id="commentForm" class='createComment' action="/forums/<%=post.category%>/<%=post._id%>/comments" method="POST">
                         <label for="commentText"></label>
-                        <input type="text" name="commentText" id="commentText">
-                        <button class="roundedButton">Post Comment</button>
+                        <textarea name="commentText" id="commentText" cols="40" rows="5" form="commentForm"></textarea>
+                        <div class="centeredDiv">
+                            <button class="roundedButton">Post Comment</button>
+                        </div>
                     </form>
                     <%for(let comment of post.comments){%>
 
                         <div id="commentBlock">
                             <p><%=comment.commentText%></p>
+                            <%if(currentUser && comment.author.equals(currentUser)){%>
+                                <form action="/forums/<%=post.category%>/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST"><button class="btnToLink">Delete</button></form>
+                            <%}%>
                         </div>
                     <%}%>
+                </div>
+            </div>
         </div>
         <%-include('../../public/textCompiler')%>
     </section>
 
     <footer>
-        <a href="/forums/<%=post.category%>/<%=post._id%>/edit">Edit</a>
     </footer>
